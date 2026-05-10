@@ -116,13 +116,11 @@ export default function ChecklistTab({ trip, isOwner }: { trip: any, isOwner: bo
 
   const handleReset = async () => {
     if (!isOwner) return;
-    if (confirm('Are you sure you want to delete all items?')) {
-      try {
-        await fetch(`/api/trips/${trip.id}/checklist`, { method: 'DELETE' });
-        setItems([]);
-      } catch (err) {
-        console.error(err);
-      }
+    try {
+      await fetch(`/api/trips/${trip.id}/checklist/reset`, { method: 'PUT' });
+      setItems(items.map(i => ({ ...i, isPacked: false })));
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -277,7 +275,7 @@ export default function ChecklistTab({ trip, isOwner }: { trip: any, isOwner: bo
 
       {items.length > 0 && isOwner && (
         <div className="text-center pt-8 print:hidden">
-          <button onClick={handleReset} className="text-sm text-error/80 hover:text-error hover:underline flex items-center justify-center gap-1 mx-auto">
+          <button onClick={handleReset} className="text-sm text-earth-muted hover:text-earth hover:underline flex items-center justify-center gap-1 mx-auto">
             <RefreshCw size={14} /> Reset checklist
           </button>
         </div>
