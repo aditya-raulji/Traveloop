@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { Camera, MapPin, Mail, Phone, Calendar, Globe, Bell, Map, Activity, MessageCircle, LogOut, Loader2 } from 'lucide-react';
+import { Camera, MapPin, Mail, Phone, Calendar, Globe, Bell, Map, Activity, MessageCircle, LogOut, Loader2, Trash2 } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 
@@ -20,7 +20,14 @@ export default function ProfilePage() {
     city: '',
     country: '',
     phone: '',
-    image: ''
+    image: '',
+    language: 'English'
+  });
+
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
   });
 
   useEffect(() => {
@@ -35,7 +42,8 @@ export default function ProfilePage() {
             city: data.city || '',
             country: data.country || '',
             phone: data.phone || '',
-            image: data.image || ''
+            image: data.image || '',
+            language: 'English'
           });
           setIsLoading(false);
         })
@@ -124,7 +132,7 @@ export default function ProfilePage() {
       {/* Tabs */}
       <div className="bg-white border-b border-earth/10 sticky top-[73px] z-30">
         <div className="max-w-4xl mx-auto px-4 flex overflow-x-auto hide-scrollbar">
-          {['Overview', 'Preplanned Trips', 'Previous Trips', 'Settings'].map(tab => (
+          {['Overview', 'Saved Destinations', 'Preplanned Trips', 'Previous Trips', 'Settings'].map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -155,6 +163,35 @@ export default function ProfilePage() {
                 No favorites yet.
               </div>
             </div>
+          </div>
+        )}
+
+        {/* SAVED DESTINATIONS (New Feature) */}
+        {activeTab === 'Saved Destinations' && (
+          <div className="space-y-6">
+            <h3 className="font-serif italic text-2xl text-earth">Saved Destinations</h3>
+            {profile?.savedCities?.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {profile.savedCities.map((city: string, i: number) => (
+                  <div key={i} className="group relative rounded-[20px] h-[180px] overflow-hidden bg-paper-dark border border-earth/10 shadow-sm cursor-pointer">
+                    <img src={`https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=400`} alt={city} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-between p-5">
+                      <div className="flex justify-end">
+                        <button className="bg-white/20 p-2 rounded-full backdrop-blur-sm text-white hover:bg-error transition-colors">
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                      <h4 className="text-white font-medium text-lg mb-1">{city}</h4>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-white p-12 rounded-[24px] border border-earth/10 text-center">
+                <p className="text-earth-muted mb-4">You haven't saved any destinations yet.</p>
+                <Link href="/explore/cities" className="px-6 py-2 bg-gold text-white rounded-full text-sm font-medium hover:bg-gold-dark transition-colors inline-block">Explore Cities</Link>
+              </div>
+            )}
           </div>
         )}
 
@@ -214,6 +251,15 @@ export default function ProfilePage() {
                     <label className="block text-sm font-medium text-earth-muted mb-1">Country</label>
                     <input type="text" value={formData.country} onChange={e => setFormData({...formData, country: e.target.value})} className="w-full p-3 rounded-xl border border-earth/20 bg-paper focus:outline-none focus:border-gold" />
                   </div>
+                  <div>
+                    <label className="block text-sm font-medium text-earth-muted mb-1">Language Preference</label>
+                    <select value={formData.language} onChange={e => setFormData({...formData, language: e.target.value})} className="w-full p-3 rounded-xl border border-earth/20 bg-paper focus:outline-none focus:border-gold">
+                      <option value="English">English</option>
+                      <option value="Hindi">Hindi</option>
+                      <option value="Spanish">Spanish</option>
+                      <option value="French">French</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div>
@@ -233,6 +279,46 @@ export default function ProfilePage() {
                   <button type="submit" disabled={isSaving} className="px-6 py-3 rounded-xl bg-gold text-white font-medium hover:bg-gold-dark transition-colors shadow-lg shadow-gold/20 flex items-center gap-2">
                     {isSaving && <Loader2 size={16} className="animate-spin" />}
                     Save changes
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div className="p-8 border-b border-earth/10 bg-paper/30">
+              <h3 className="font-serif italic text-2xl text-earth mb-6">Change Password</h3>
+              <form onSubmit={async (e) => {
+                e.preventDefault();
+                if (passwordData.newPassword !== passwordData.confirmPassword) {
+                  return alert("New passwords don't match!");
+                }
+                const res = await fetch('/api/auth/change-password', {
+                  method: 'PATCH',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ currentPassword: passwordData.currentPassword, newPassword: passwordData.newPassword })
+                });
+                if (res.ok) {
+                  alert('Password updated successfully');
+                  setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+                } else {
+                  const err = await res.json();
+                  alert(err.error || 'Failed to update password');
+                }
+              }} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-earth-muted mb-1">Current Password</label>
+                  <input type="password" value={passwordData.currentPassword} onChange={e => setPasswordData({...passwordData, currentPassword: e.target.value})} required className="w-full p-3 rounded-xl border border-earth/20 bg-white focus:outline-none focus:border-gold" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-earth-muted mb-1">New Password</label>
+                  <input type="password" value={passwordData.newPassword} onChange={e => setPasswordData({...passwordData, newPassword: e.target.value})} required minLength={6} className="w-full p-3 rounded-xl border border-earth/20 bg-white focus:outline-none focus:border-gold" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-earth-muted mb-1">Confirm New Password</label>
+                  <input type="password" value={passwordData.confirmPassword} onChange={e => setPasswordData({...passwordData, confirmPassword: e.target.value})} required minLength={6} className="w-full p-3 rounded-xl border border-earth/20 bg-white focus:outline-none focus:border-gold" />
+                </div>
+                <div className="pt-2 flex justify-end">
+                  <button type="submit" className="px-6 py-3 rounded-xl bg-earth text-white font-medium hover:bg-earth-muted transition-colors shadow-sm">
+                    Update password
                   </button>
                 </div>
               </form>
