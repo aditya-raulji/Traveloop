@@ -19,8 +19,8 @@
 | | Link |
 |---|---|
 | 🎥 YouTube Demo | [Watch Demo](https://youtube.com/placeholder) |
-| 🌐 Live Frontend | [traveloop.vercel.app](https://traveloop.vercel.app) |
-| 🔧 Backend API | [traveloop.vercel.app/api](https://traveloop.vercel.app/api) |
+| 🌐 Live Frontend | [traveloop-dun.vercel.app](https://traveloop-dun.vercel.app) |
+| 🔧 Backend API | [traveloop-dun.vercel.app/api](https://traveloop-dun.vercel.app/api) |
 
 ---
 

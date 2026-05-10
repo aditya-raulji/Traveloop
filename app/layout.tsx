@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Traveloop — Plan Your Perfect Journey",
     description: "Personalized travel planning made easy. Build itineraries, track budgets, discover activities, and share stories with fellow travelers.",
-    url: "https://traveloop.vercel.app",
+    url: "https://traveloop-dun.vercel.app",
     siteName: "Traveloop",
     images: [
       {
