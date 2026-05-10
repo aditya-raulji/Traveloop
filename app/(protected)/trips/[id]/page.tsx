@@ -26,8 +26,12 @@ export default async function TripPage({ params }: { params: Promise<{ id: strin
         },
       },
       expenses: {
-        orderBy: { date: 'asc' }
+        orderBy: { date: 'asc' },
+        include: { stop: true }
       },
+      checklist: {
+        include: { items: true }
+      }
     },
   });
 

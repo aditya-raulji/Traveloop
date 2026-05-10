@@ -66,6 +66,7 @@ model TripStop {
   
   trip       Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
   activities StopActivity[]
+  expenses   Expense[]
 }
 
 model Activity {
@@ -99,6 +100,7 @@ model StopActivity {
 model Expense {
   id          String   @id @default(cuid())
   tripId      String
+  stopId      String?  
   category    String
   description String
   amount      Float
@@ -107,6 +109,7 @@ model Expense {
   receipt     String?
   
   trip        Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  stop        TripStop? @relation(fields: [stopId], references: [id], onDelete: SetNull)
 }
 
 model PackingChecklist {
