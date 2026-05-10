@@ -8,6 +8,7 @@ import { ArrowLeft, MoreHorizontal, MapPin, Calendar, DollarSign, Activity, Chec
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import BudgetTab from '@/components/trips/BudgetTab';
 import ChecklistTab from '@/components/trips/ChecklistTab';
+import NotesTab from '@/components/trips/NotesTab';
 
 // Utility for fetching updating trip status (public/private)
 async function updateTrip(id: string, updates: any) {
@@ -118,7 +119,7 @@ export default function TripClient({ trip, isOwner }: { trip: any, isOwner: bool
         {activeTab === 'Itinerary' && <ItineraryTab trip={trip} isOwner={isOwner} />}
         {activeTab === 'Budget' && <BudgetTab trip={trip} isOwner={isOwner} />}
         {activeTab === 'Checklist' && <ChecklistTab trip={trip} isOwner={isOwner} />}
-        {activeTab === 'Notes' && <div className="text-center py-20 text-earth-muted">Trip notes coming soon</div>}
+        {activeTab === 'Notes' && <NotesTab trip={trip} isOwner={isOwner} />}
       </main>
     </div>
   );
