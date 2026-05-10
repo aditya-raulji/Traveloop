@@ -7,7 +7,7 @@ import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 
 export default function ProfilePage() {
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const [profile, setProfile] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('Overview');
   const [isLoading, setIsLoading] = useState(true);
@@ -57,6 +57,7 @@ export default function ProfilePage() {
       if (res.ok) {
         const { user } = await res.json();
         setProfile({ ...profile, ...user });
+        await update({ name: user.name, image: user.image });
         alert('Profile updated successfully!');
       }
     } catch (err) {

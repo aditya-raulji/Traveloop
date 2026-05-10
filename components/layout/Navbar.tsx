@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import { Menu, X } from 'lucide-react';
 
 export function Navbar() {
+  const { data: session } = useSession();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   
@@ -21,7 +23,6 @@ export function Navbar() {
     { label: 'My Trips', href: '/trips' },
     { label: 'Explore', href: '/explore/cities' },
     { label: 'Community', href: '/community' },
-    { label: 'Profile', href: '/profile' },
   ];
 
   return (
@@ -52,7 +53,20 @@ export function Navbar() {
               </li>
             ))}
           </ul>
-          <Button variant="ghost">Login</Button>
+          
+          {session?.user ? (
+            <Link href="/profile" className="w-10 h-10 rounded-full border border-gold/20 overflow-hidden flex items-center justify-center bg-gold/10 text-gold font-serif italic hover:scale-105 transition-transform">
+              {session.user.image ? (
+                <img src={session.user.image} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                session.user.name?.charAt(0) || 'U'
+              )}
+            </Link>
+          ) : (
+            <Link href="/login">
+              <Button variant="ghost">Login</Button>
+            </Link>
+          )}
         </div>
 
         {/* Mobile Nav Toggle */}
@@ -80,9 +94,24 @@ export function Navbar() {
               </li>
             ))}
           </ul>
-          <Button variant="ghost" className="justify-start px-0 text-sm">
-            Login
-          </Button>
+          {session?.user ? (
+            <Link href="/profile" onClick={() => setIsMobileOpen(false)} className="flex items-center gap-3 mt-2 border-t border-earth/10 pt-4">
+              <div className="w-10 h-10 rounded-full border border-gold/20 overflow-hidden flex items-center justify-center bg-gold/10 text-gold font-serif italic">
+                {session.user.image ? (
+                  <img src={session.user.image} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  session.user.name?.charAt(0) || 'U'
+                )}
+              </div>
+              <span className="text-earth font-medium">Profile</span>
+            </Link>
+          ) : (
+            <Link href="/login" onClick={() => setIsMobileOpen(false)}>
+              <Button variant="ghost" className="justify-start px-0 text-sm">
+                Login
+              </Button>
+            </Link>
+          )}
         </div>
       )}
     </nav>
