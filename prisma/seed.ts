@@ -35,14 +35,33 @@ function getRandomElement(arr: any[]) {
 }
 
 async function main() {
-  console.log('Clearing existing activities...');
+  console.log('Clearing existing data...');
   await prisma.activity.deleteMany({});
+  await prisma.city.deleteMany({});
+  
+  console.log('Seeding cities...');
+  const cityMap = new Map();
+  for (const city of CITIES) {
+    const createdCity = await prisma.city.create({
+      data: {
+        cityName: city.name,
+        country: city.country,
+        continent: city.continent,
+        imageUrl: city.imageUrl,
+        avgCost: city.avgDailyBudget,
+        popularity: 0,
+        bestFor: city.bestFor,
+        description: city.description
+      }
+    });
+    cityMap.set(city.name, createdCity.id);
+  }
   
   console.log('Generating activities...');
   const activities = [];
 
   for (const city of CITIES) {
-    // Generate 10-15 activities per city
+    const cityId = cityMap.get(city.name);
     const numActivities = getRandomInt(10, 15);
     for (let i = 0; i < numActivities; i++) {
       const category = getRandomElement(CATEGORIES) as keyof typeof IMAGE_PATTERNS;
@@ -53,39 +72,39 @@ async function main() {
         name: `${adjective} ${city.name} ${noun}`,
         description: `Experience the best of ${city.name} with this ${adjective.toLowerCase()} ${noun.toLowerCase()}. A must-do for any visitor.`,
         category,
-        city: city.name,
+        cityName: city.name,
         country: city.country,
+        cityId: cityId,
         avgCost: getRandomInt(0, 200),
-        duration: getRandomInt(30, 480), // 30 mins to 8 hours
+        duration: getRandomInt(30, 480),
         imageUrl: `https://images.unsplash.com/${IMAGE_PATTERNS[category]}?w=800&q=80`,
-        rating: Number((Math.random() * (5 - 3.5) + 3.5).toFixed(1)) // 3.5 to 5.0
+        rating: Number((Math.random() * (5 - 3.5) + 3.5).toFixed(1))
       });
     }
     
-    // Ensure the topActivities from city data are also included
     for (const topActivityName of city.topActivities) {
       activities.push({
         name: topActivityName,
         description: `One of the most famous attractions in ${city.name}.`,
-        category: 'Sightseeing', // default
-        city: city.name,
+        category: 'Sightseeing',
+        cityName: city.name,
         country: city.country,
+        cityId: cityId,
         avgCost: getRandomInt(10, 50),
         duration: getRandomInt(60, 240),
         imageUrl: `https://images.unsplash.com/${IMAGE_PATTERNS['Sightseeing']}?w=800&q=80`,
-        rating: Number((Math.random() * (5 - 4.5) + 4.5).toFixed(1)) // 4.5 to 5.0
+        rating: Number((Math.random() * (5 - 4.5) + 4.5).toFixed(1))
       });
     }
   }
 
   console.log(`Seeding ${activities.length} activities...`);
   
-  // Use createMany for bulk insert
   await prisma.activity.createMany({
     data: activities
   });
   
-  console.log(`Successfully seeded ${activities.length} activities.`);
+  console.log(`Successfully seeded ${cityMap.size} cities and ${activities.length} activities.`);
 }
 
 main()

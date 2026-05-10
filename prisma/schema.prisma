@@ -18,6 +18,7 @@ model User {
   country       String?
   phone         String?
   role          String    @default("user")
+  savedCities   String[]  @default([])
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   
@@ -49,12 +50,14 @@ model Trip {
   notes       TripNote[]
   checklist   PackingChecklist[]
   posts       CommunityPost[]
+  budgetDetails Budget?
 }
 
 model TripStop {
   id         String   @id @default(cuid())
   tripId     String
-  cityName   String
+  cityId     String?
+  cityName   String   @default("")
   country    String?
   latitude   Float?
   longitude  Float?
@@ -65,6 +68,7 @@ model TripStop {
   notes      String?
   
   trip       Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  city       City?    @relation(fields: [cityId], references: [id])
   activities StopActivity[]
   expenses   Expense[]
 }
@@ -74,8 +78,10 @@ model Activity {
   name        String
   description String?
   category    String
-  city        String
+  cityName    String?
   country     String?
+  cityId      String?
+  city        City?   @relation(fields: [cityId], references: [id])
   avgCost     Float?
   duration    Int?
   imageUrl    String?
@@ -89,6 +95,7 @@ model StopActivity {
   stopId     String
   activityId String
   date       DateTime?
+  time       String?
   cost       Float?
   notes      String?
   done       Boolean  @default(false)
@@ -193,4 +200,31 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model City {
+  id          String   @id @default(cuid())
+  cityName    String
+  country     String
+  continent   String?
+  imageUrl    String?
+  avgCost     Decimal  @default(0)
+  popularity  Int      @default(0)
+  bestFor     String[]
+  description String?
+  
+  stops       TripStop[]
+  activities  Activity[]
+}
+
+model Budget {
+  id            String   @id @default(cuid())
+  tripId        String   @unique
+  transportCost Decimal  @default(0)
+  hotelCost     Decimal  @default(0)
+  foodCost      Decimal  @default(0)
+  activityCost  Decimal  @default(0)
+  totalCost     Decimal  @default(0)
+  
+  trip          Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
 }
