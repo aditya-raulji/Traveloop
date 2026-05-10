@@ -31,6 +31,9 @@ export default async function TripPage({ params }: { params: Promise<{ id: strin
       },
       checklist: {
         include: { items: true }
+      },
+      notes: {
+        orderBy: { createdAt: 'desc' }
       }
     },
   });
