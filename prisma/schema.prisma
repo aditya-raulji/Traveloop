@@ -58,10 +58,10 @@ model TripStop {
   country    String?
   latitude   Float?
   longitude  Float?
-  startDate  DateTime
-  endDate    DateTime
+  startDate  DateTime?
+  endDate    DateTime?
   order      Int
-  budget     Decimal  @default(0)
+  budget     Float?
   notes      String?
   
   trip       Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
@@ -75,7 +75,7 @@ model Activity {
   category    String
   city        String
   country     String?
-  avgCost     Decimal @default(0)
+  avgCost     Float?
   duration    Int?
   imageUrl    String?
   rating      Float   @default(0)
@@ -88,7 +88,7 @@ model StopActivity {
   stopId     String
   activityId String
   date       DateTime?
-  cost       Decimal  @default(0)
+  cost       Float?
   notes      String?
   done       Boolean  @default(false)
   
@@ -101,7 +101,7 @@ model Expense {
   tripId      String
   category    String
   description String
-  amount      Decimal
+  amount      Float
   currency    String   @default("USD")
   date        DateTime
   receipt     String?
