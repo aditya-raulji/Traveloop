@@ -6,7 +6,7 @@ const destinations = [
   { city: "Bali", country: "Indonesia", img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400" },
   { city: "Kyoto", country: "Japan", img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400" },
   { city: "Reykjavik", country: "Iceland", img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400" },
-  { city: "Marrakech", country: "Morocco", img: "https://images.unsplash.com/photo-1539020140153-e479b8f22986?w=400" },
+  { city: "Marrakech", country: "Morocco", img: "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=400" },
 ];
 
 export interface DestinationCardProps {
