@@ -15,7 +15,7 @@ export async function POST(
 
     const { id, stopId } = await params;
     const body = await req.json();
-    const { activityId, date, cost, notes } = body;
+    const { activityId, date, cost, notes, time } = body;
 
     if (!activityId) {
       return NextResponse.json({ error: 'Activity ID is required' }, { status: 400 });
@@ -36,6 +36,7 @@ export async function POST(
         stopId,
         activityId,
         date: date ? new Date(date) : null,
+        time: time || null,
         cost: cost ? parseFloat(cost) : null,
         notes: notes || null,
       },

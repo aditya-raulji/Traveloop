@@ -139,6 +139,7 @@ export default function ItineraryBuilder({ trip }: { trip: any }) {
           date: activeDrawerData.date,
           cost: payload.cost,
           notes: payload.notes,
+          time: payload.time,
         })
       });
       if (res.ok) {

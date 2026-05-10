@@ -20,6 +20,7 @@ export default function ActivityDrawer({ isOpen, onClose, dayHeader, onAddActivi
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [showCustom, setShowCustom] = useState(false);
+  const [selectedTime, setSelectedTime] = useState('');
 
   // Custom Form State
   const [customName, setCustomName] = useState('');
@@ -137,6 +138,16 @@ export default function ActivityDrawer({ isOpen, onClose, dayHeader, onAddActivi
                 />
               </div>
 
+              <div className="mt-3">
+                <label className="text-xs text-earth-muted block mb-1">Time (Optional)</label>
+                <input 
+                  type="time" 
+                  value={selectedTime}
+                  onChange={e => setSelectedTime(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl border border-earth-muted/20 focus:outline-none focus:border-gold text-sm bg-white"
+                />
+              </div>
+
               {/* Categories */}
               <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide">
                 {CATEGORIES.map(c => (
@@ -225,7 +236,7 @@ export default function ActivityDrawer({ isOpen, onClose, dayHeader, onAddActivi
                           </div>
                           <div className="flex justify-end mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
                             <button 
-                              onClick={() => onAddActivity({ activity, cost: activity.avgCost })}
+                              onClick={() => onAddActivity({ activity, cost: activity.avgCost, time: selectedTime })}
                               className="text-xs bg-gold text-white px-3 py-1 rounded-lg flex items-center hover:bg-gold-dark"
                             >
                               <Plus className="w-3 h-3 mr-1" /> Add
