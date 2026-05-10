@@ -25,7 +25,7 @@ export async function GET(req: Request) {
         : sort === 'budget' ? { budget: 'desc' }
         : { startDate: 'asc' },
       include: {
-        stops: { select: { id: true, cityName: true, country: true }, orderBy: { order: 'asc' } },
+        stops: { select: { id: true, cityName: true, city: { select: { cityName: true } } }, orderBy: { order: 'asc' } },
         _count: { select: { expenses: true } }
       }
     });

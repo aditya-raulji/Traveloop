@@ -22,7 +22,7 @@ export async function GET(req: Request) {
     const posts = await prisma.communityPost.findMany({
       include: {
         user: { select: { id: true, name: true, image: true } },
-        trip: { select: { id: true, name: true, stops: { select: { cityName: true, country: true } } } }
+        trip: { select: { id: true, name: true, stops: { select: { cityName: true } } } }
       },
       orderBy,
     });
@@ -57,7 +57,7 @@ export async function POST(req: Request) {
       },
       include: {
         user: { select: { id: true, name: true, image: true } },
-        trip: { select: { id: true, name: true, stops: { select: { cityName: true, country: true } } } }
+        trip: { select: { id: true, name: true, stops: { select: { cityName: true } } } }
       }
     });
 

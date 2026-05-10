@@ -30,7 +30,7 @@ export async function GET(
     // Fetch activities from database for this city
     const activities = await prisma.activity.findMany({
       where: {
-        city: {
+        cityName: {
           equals: cityData.name,
           mode: 'insensitive',
         },
