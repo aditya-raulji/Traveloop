@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { format, differenceInDays, addDays } from 'date-fns';
 import { ArrowLeft, MoreHorizontal, MapPin, Calendar, DollarSign, Activity, CheckCircle, Circle, Edit, Share2, Globe, Lock, Trash } from 'lucide-react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import BudgetTab from '@/components/trips/BudgetTab';
+import ChecklistTab from '@/components/trips/ChecklistTab';
 
 // Utility for fetching updating trip status (public/private)
 async function updateTrip(id: string, updates: any) {
@@ -114,8 +116,8 @@ export default function TripClient({ trip, isOwner }: { trip: any, isOwner: bool
       <main className="max-w-5xl mx-auto px-4 md:px-8 mt-8">
         {activeTab === 'Overview' && <OverviewTab trip={trip} duration={duration} activitiesCount={activitiesCount} />}
         {activeTab === 'Itinerary' && <ItineraryTab trip={trip} isOwner={isOwner} />}
-        {activeTab === 'Budget' && <div className="text-center py-20 text-earth-muted">Detailed budget coming soon</div>}
-        {activeTab === 'Checklist' && <div className="text-center py-20 text-earth-muted">Packing checklist coming soon</div>}
+        {activeTab === 'Budget' && <BudgetTab trip={trip} isOwner={isOwner} />}
+        {activeTab === 'Checklist' && <ChecklistTab trip={trip} isOwner={isOwner} />}
         {activeTab === 'Notes' && <div className="text-center py-20 text-earth-muted">Trip notes coming soon</div>}
       </main>
     </div>
