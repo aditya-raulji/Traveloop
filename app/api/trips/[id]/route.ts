@@ -73,7 +73,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
 
     return NextResponse.json(trip);
   } catch (err) {
-    if (err instanceof z.ZodError) return NextResponse.json({ error: err.errors }, { status: 400 });
+    if (err instanceof z.ZodError) return NextResponse.json({ error: (err as any).errors }, { status: 400 });
     console.error('PUT /api/trips/[id] error:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

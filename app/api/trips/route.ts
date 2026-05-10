@@ -93,7 +93,7 @@ export async function POST(req: Request) {
     return NextResponse.json(trip, { status: 201 });
   } catch (err) {
     if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: err.errors }, { status: 400 });
+      return NextResponse.json({ error: (err as any).errors }, { status: 400 });
     }
     console.error('POST /api/trips error:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
