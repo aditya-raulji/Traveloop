@@ -5,8 +5,8 @@ import type { NextRequest } from 'next/server';
 const protectedRoutes = ['/dashboard', '/trips', '/profile', '/admin'];
 const authRoutes = ['/login', '/register', '/forgot-password'];
 
-export async function middleware(request: NextRequest) {
-  const token = await getToken({ req: request });
+export async function proxy(request: NextRequest) {
+  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
   const { pathname } = request.nextUrl;
 
   const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
