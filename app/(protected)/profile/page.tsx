@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { Camera, MapPin, Mail, Phone, Calendar, Globe, Bell, Map, Activity, MessageCircle, LogOut, Loader2, Trash2 } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 export default function ProfilePage() {
   const { data: session, update } = useSession();
@@ -87,13 +88,13 @@ export default function ProfilePage() {
       {/* Profile Header */}
       <section className="bg-earth text-paper py-20 px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center md:items-end gap-8 relative z-10">
+        <div className="max-w-container flex flex-col md:flex-row items-center md:items-end gap-8 relative z-10">
           <div className="relative group cursor-pointer">
             <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-paper bg-gold/20 overflow-hidden relative">
               {profile.image ? (
                 <img src={profile.image} alt={profile.name} className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-4xl text-gold font-serif italic">{profile.name?.charAt(0)}</div>
+                <div className="w-full h-full flex items-center justify-center text-4xl text-gold font-heading italic">{profile.name?.charAt(0)}</div>
               )}
             </div>
             {activeTab === 'Settings' && (
@@ -104,9 +105,9 @@ export default function ProfilePage() {
           </div>
 
           <div className="flex-1 text-center md:text-left space-y-2">
-            <h1 className="font-serif italic text-4xl md:text-5xl text-gold">{profile.name}</h1>
-            <p className="text-paper/80 max-w-lg">{profile.bio || 'Wandering the globe, one city at a time.'}</p>
-            <div className="flex items-center justify-center md:justify-start gap-2 text-sm text-paper/60 mt-2">
+            <h1 className="text-hero-heading text-gold leading-tight">{profile.name}</h1>
+            <p className="font-body text-paper/80 max-w-lg">{profile.bio || 'Wandering the globe, one city at a time.'}</p>
+            <div className="flex items-center justify-center md:justify-start gap-2 text-sm text-paper/60 mt-2 font-body">
               <MapPin size={14} /> 
               <span>{(profile.city && profile.country) ? `${profile.city}, ${profile.country}` : 'Location unknown'}</span>
             </div>
@@ -114,31 +115,32 @@ export default function ProfilePage() {
 
           <div className="flex flex-wrap justify-center gap-6 text-center md:text-left pt-6 md:pt-0 border-t border-white/10 md:border-t-0 md:border-l md:pl-8">
             <div>
-              <p className="font-serif italic text-3xl text-gold">{profile.trips?.length || 0}</p>
-              <p className="text-xs text-paper/60 uppercase tracking-wider mt-1">Trips</p>
+              <p className="font-heading italic text-3xl text-gold">{profile.trips?.length || 0}</p>
+              <p className="font-body text-[10px] text-paper/60 uppercase tracking-widest mt-1">Trips</p>
             </div>
             <div>
-              <p className="font-serif italic text-3xl text-gold">{profile.reviews?.length || 0}</p>
-              <p className="text-xs text-paper/60 uppercase tracking-wider mt-1">Posts</p>
+              <p className="font-heading italic text-3xl text-gold">{profile.reviews?.length || 0}</p>
+              <p className="font-body text-[10px] text-paper/60 uppercase tracking-widest mt-1">Posts</p>
             </div>
             <div>
-              <p className="font-serif italic text-3xl text-gold">0</p>
-              <p className="text-xs text-paper/60 uppercase tracking-wider mt-1">Days Traveled</p>
+              <p className="font-heading italic text-3xl text-gold">0</p>
+              <p className="font-body text-[10px] text-paper/60 uppercase tracking-widest mt-1">Days Traveled</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Tabs */}
-      <div className="bg-white border-b border-earth/10 sticky top-[73px] z-30">
-        <div className="max-w-4xl mx-auto px-4 flex overflow-x-auto hide-scrollbar">
+      <div className="bg-white border-b border-earth/10 sticky top-[64px] md:top-[73px] z-30">
+        <div className="max-w-container flex overflow-x-auto scrollbar-hide">
           {['Overview', 'Saved Destinations', 'Preplanned Trips', 'Previous Trips', 'Settings'].map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
+              className={cn(
+                "px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors",
                 activeTab === tab ? 'border-gold text-earth' : 'border-transparent text-earth-muted hover:text-earth'
-              }`}
+              )}
             >
               {tab}
             </button>
@@ -146,7 +148,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 mt-12">
+      <div className="max-w-container mt-12">
         
         {/* OVERVIEW TAB */}
         {activeTab === 'Overview' && (

@@ -5,6 +5,8 @@ import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveCo
 import { Plane, Hotel, Zap, Utensils, MoreHorizontal, X, Plus, AlertCircle, Download, Mail, FileText } from 'lucide-react';
 import { format } from 'date-fns';
 
+import { cn } from '@/lib/utils';
+
 const CATEGORY_COLORS: Record<string, string> = {
   Transport: '#B08968', // gold
   Stay: '#606C38',      // forest
@@ -114,35 +116,41 @@ export default function BudgetTab({ trip, isOwner }: { trip: any, isOwner: boole
       )}
 
       {/* Top Summary Row */}
-      <div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-[20px] p-6 shadow-sm border border-gold/20">
-            <p className="text-sm text-earth-muted mb-1 font-medium">Total Budget</p>
-            <p className="font-serif italic text-[42px] text-gold leading-none">${totalBudget.toLocaleString()}</p>
+      <div className="max-w-container">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="bg-white rounded-[24px] p-6 shadow-premium border border-gold/20">
+            <p className="font-body text-[11px] uppercase tracking-widest text-earth-muted mb-3">Total Budget</p>
+            <p className="font-heading italic text-4xl text-gold leading-none">${totalBudget.toLocaleString()}</p>
           </div>
-          <div className="bg-white rounded-[20px] p-6 shadow-sm border border-earth/10">
-            <p className="text-sm text-earth-muted mb-1 font-medium">Spent So Far</p>
-            <p className={`font-serif italic text-[42px] leading-none ${spentSoFar > totalBudget ? 'text-error' : 'text-earth'}`}>
+          <div className="bg-white rounded-[24px] p-6 shadow-premium border border-earth/10">
+            <p className="font-body text-[11px] uppercase tracking-widest text-earth-muted mb-3">Spent So Far</p>
+            <p className={cn("font-heading italic text-4xl leading-none", spentSoFar > totalBudget ? 'text-error' : 'text-earth')}>
               ${spentSoFar.toLocaleString()}
             </p>
           </div>
-          <div className="bg-white rounded-[20px] p-6 shadow-sm border border-forest/20">
-            <p className="text-sm text-earth-muted mb-1 font-medium">Remaining</p>
-            <p className={`font-serif italic text-[42px] leading-none ${remaining < 0 ? 'text-error' : 'text-forest'}`}>
+          <div className="bg-white rounded-[24px] p-6 shadow-premium border border-forest/20">
+            <p className="font-body text-[11px] uppercase tracking-widest text-earth-muted mb-3">Remaining</p>
+            <p className={cn("font-heading italic text-4xl leading-none", remaining < 0 ? 'text-error' : 'text-forest')}>
               ${remaining.toLocaleString()}
             </p>
           </div>
         </div>
-        <p className="text-earth-muted mt-4 ml-2">Avg cost per day: <span className="font-semibold text-earth">${Math.round(avgCostPerDay).toLocaleString()}</span></p>
+        <p className="text-earth-muted mt-6 text-sm font-body">Avg cost per day: <span className="font-semibold text-earth">${Math.round(avgCostPerDay).toLocaleString()}</span></p>
       </div>
 
       {/* Charts Row */}
       {expenses.length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Pie Chart */}
-          <div className="bg-white rounded-[20px] p-6 shadow-sm border border-earth/10">
-            <h3 className="font-serif italic text-xl text-earth mb-6">Spending Breakdown</h3>
-            <div className="h-[250px]">
+          <div className="bg-white rounded-[24px] p-6 shadow-premium border border-earth/10">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+              <h3 className="text-card-heading text-earth">Expense Breakdown</h3>
+              <a href={`/api/trips/${trip.id}/export`} target="_blank" className="px-5 py-2 bg-gold/10 text-gold rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-gold/20 transition-colors border border-gold/20 flex items-center gap-2">
+                <Download size={14} />
+                Export PDF
+              </a>
+            </div>
+            <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -150,7 +158,7 @@ export default function BudgetTab({ trip, isOwner }: { trip: any, isOwner: boole
                     cx="50%"
                     cy="50%"
                     innerRadius={60}
-                    outerRadius={80}
+                    outerRadius={90}
                     paddingAngle={5}
                     dataKey="value"
                   >
@@ -159,7 +167,7 @@ export default function BudgetTab({ trip, isOwner }: { trip: any, isOwner: boole
                     ))}
                   </Pie>
                   <Tooltip formatter={(value: any) => `$${value}`} />
-                  <Legend />
+                  <Legend verticalAlign="bottom" height={36} iconType="circle" />
                 </PieChart>
               </ResponsiveContainer>
             </div>

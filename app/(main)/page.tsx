@@ -60,7 +60,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="font-heading italic font-semibold text-white text-[52px] md:text-[80px] leading-[1] tracking-[1px] mb-6 max-w-3xl"
+            className="text-hero-heading font-semibold text-white leading-[1.1] tracking-[1px] mb-6 max-w-3xl"
           >
             Explore<br />Untamed Journeys
           </motion.h1>
@@ -69,7 +69,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="font-body text-[18px] text-white/75 leading-[1.8] max-w-[480px] mb-10"
+            className="text-body-responsive text-white/75 leading-[1.8] max-w-[480px] mb-10"
           >
             Plan your dream trip. Build your perfect itinerary. Let your adventure begin with Traveloop's cinematic planner.
           </motion.p>
@@ -110,11 +110,11 @@ export default function LandingPage() {
       </section>
 
       {/* SECTION 2 — QUICK SEARCH BAR */}
-      <section className="relative z-30 -mt-6 px-6 md:px-12 pb-16">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-paper shadow-[0_20px_80px_rgba(0,0,0,0.12)] rounded-pill md:rounded-pill rounded-[24px] px-6 py-4 flex flex-col md:flex-row items-center gap-4">
-            <div className="flex flex-col md:flex-row flex-1 gap-4 md:gap-0 w-full">
-              <div className="flex items-center gap-3 flex-1 md:pr-6 md:border-r border-earth-muted/20">
+      <section className="relative z-30 -mt-8 px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-paper shadow-premium rounded-[24px] md:rounded-pill p-4 md:p-2 flex flex-col md:flex-row items-center gap-4">
+            <div className="flex flex-col md:flex-row flex-1 w-full">
+              <div className="flex items-center gap-3 flex-1 px-4 py-3 md:py-0 md:border-r border-earth/10">
                 <MapPin size={18} className="text-gold flex-shrink-0" />
                 <input
                   type="text"
@@ -124,7 +124,7 @@ export default function LandingPage() {
                   className="flex-1 bg-transparent font-body text-earth placeholder:text-earth-muted/60 outline-none text-sm"
                 />
               </div>
-              <div className="flex items-center gap-3 flex-1 md:px-6 md:border-r border-earth-muted/20">
+              <div className="flex items-center gap-3 flex-1 px-4 py-3 md:py-0 md:border-r border-earth/10">
                 <Calendar size={18} className="text-gold flex-shrink-0" />
                 <input
                   type="text"
@@ -134,7 +134,7 @@ export default function LandingPage() {
                   className="flex-1 bg-transparent font-body text-earth placeholder:text-earth-muted/60 outline-none text-sm"
                 />
               </div>
-              <div className="flex items-center gap-3 flex-1 md:pl-6">
+              <div className="flex items-center gap-3 flex-1 px-4 py-3 md:py-0">
                 <Users size={18} className="text-gold flex-shrink-0" />
                 <input
                   type="text"
@@ -147,7 +147,7 @@ export default function LandingPage() {
             </div>
             <Link
               href="/register"
-              className="bg-gold text-white rounded-pill px-6 py-3 font-medium font-body text-sm hover:bg-[#B58A40] transition-colors flex-shrink-0 flex items-center gap-2 w-full md:w-auto justify-center"
+              className="bg-gold text-white rounded-pill px-8 py-4 md:py-3 font-medium font-body text-sm hover:bg-gold-dark transition-colors flex-shrink-0 flex items-center gap-2 w-full md:w-auto justify-center shadow-lg"
             >
               <Search size={16} />
               Search
@@ -157,28 +157,26 @@ export default function LandingPage() {
       </section>
 
       {/* SECTION 3 — POPULAR DESTINATIONS */}
-      <section className="px-6 md:px-12 py-16 overflow-hidden">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-container">
           <div className="mb-10">
-            <h2 className="font-heading italic text-[42px] text-earth leading-tight mb-2">Popular Destinations</h2>
+            <h2 className="text-section-heading text-earth leading-tight mb-2">Popular Destinations</h2>
             <p className="font-body text-earth-muted text-base">Handpicked journeys for every kind of traveler</p>
           </div>
-          <div className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {destinations.map(dest => (
-              <div key={dest.city} className="snap-start flex-shrink-0">
-                <DestinationCard {...dest} />
-              </div>
+              <DestinationCard key={dest.city} {...dest} />
             ))}
           </div>
         </div>
       </section>
 
       {/* SECTION 4 — RECENT JOURNEYS */}
-      <section className="px-6 md:px-12 py-16 bg-paper-dark/40">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-paper-dark/40">
+        <div className="max-w-container">
           <div className="flex justify-between items-end mb-10">
             <div>
-              <h2 className="font-heading italic text-[42px] text-earth leading-tight mb-2">Recent Journeys</h2>
+              <h2 className="text-section-heading text-earth leading-tight mb-2">Recent Journeys</h2>
               <p className="font-body text-earth-muted text-base">Stories from our community of travelers</p>
             </div>
             <Link href="/register" className="text-gold font-medium text-sm hover:underline hidden md:block">
@@ -209,12 +207,13 @@ export default function LandingPage() {
       </section>
 
       {/* SECTION 5 — HOW IT WORKS */}
-      <section id="how-it-works" className="px-6 md:px-12 py-24">
-        <div className="max-w-5xl mx-auto text-center mb-16">
-          <h2 className="font-heading italic text-[48px] text-earth leading-tight mb-3">Plan smarter, travel better</h2>
-          <p className="font-body text-earth-muted text-lg">Three simple steps to your perfect journey</p>
-        </div>
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+      <section id="how-it-works" className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-container">
+          <div className="text-center mb-16">
+            <h2 className="text-section-heading text-earth leading-tight mb-3">Plan smarter, travel better</h2>
+            <p className="font-body text-earth-muted text-lg">Three simple steps to your perfect journey</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {[
             {
               num: '01',
@@ -248,12 +247,12 @@ export default function LandingPage() {
       </section>
 
       {/* SECTION 6 — PLAN A TRIP CTA */}
-      <section className="bg-earth py-24 px-6 md:px-12 text-center">
-        <div className="max-w-2xl mx-auto flex flex-col items-center gap-6">
-          <h2 className="font-heading italic text-[48px] text-paper leading-tight">
+      <section className="bg-earth py-24 px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-container flex flex-col items-center gap-6">
+          <h2 className="text-section-heading text-paper leading-tight">
             Ready to start your adventure?
           </h2>
-          <p className="font-body text-paper/70 text-lg leading-relaxed">
+          <p className="font-body text-paper/70 text-lg leading-relaxed max-w-2xl">
             Join thousands of travelers who plan their journeys with Traveloop — beautifully, effortlessly.
           </p>
           <Link

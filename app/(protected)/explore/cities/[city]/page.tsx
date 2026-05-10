@@ -8,6 +8,8 @@ import { ActivityListCard } from '@/components/explore/ActivityListCard';
 import { AddToTripDropdown } from '@/components/explore/AddToTripDropdown';
 import { CityData } from '@/lib/data/cities';
 
+import { cn } from '@/lib/utils';
+
 const CATEGORY_FILTERS = ['All', 'Sightseeing', 'Food & Dining', 'Adventure', 'Culture', 'Shopping', 'Nature'];
 
 interface Activity {
@@ -109,12 +111,15 @@ export default function CityDetailPage() {
           <p className="text-white/60 text-sm mb-1 uppercase tracking-wider">
             {cityData.continent} · {cityData.country}
           </p>
-          <h1 className="font-['Cormorant_Garamond'] italic text-white text-[4rem] leading-none">
+          <h1 className="text-hero-heading text-white leading-tight">
             {cityData.name}
           </h1>
-          <div className="flex flex-wrap gap-1.5 mt-3">
+          <div className="flex flex-wrap gap-2 mt-4">
             {cityData.bestFor.map((tag) => (
-              <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-white border border-white/20">
+              <span 
+                key={tag} 
+                className="text-[12px] px-3 py-1 rounded-full bg-white/20 text-white border border-white/30 backdrop-blur-md"
+              >
                 {tag}
               </span>
             ))}
@@ -122,15 +127,15 @@ export default function CityDetailPage() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-6 lg:px-8 mt-8">
+      <div className="max-w-container mt-8">
         {/* Info pills */}
-        <div className="flex flex-wrap gap-2 mb-8">
+        <div className="flex flex-wrap gap-3 mb-10">
           {INFO_ITEMS.map((item, i) => (
             <div
               key={i}
-              className="flex items-center gap-2 px-4 py-2 bg-[#1a1814] border border-[rgba(212,175,55,0.2)] rounded-full text-sm text-[var(--text-primary)]"
+              className="flex items-center gap-2 px-4 py-2 bg-white/15 border border-white/30 rounded-full text-sm text-white backdrop-blur-md"
             >
-              <span className="text-[var(--gold)]">{item.icon}</span>
+              <span className="text-white/80">{item.icon}</span>
               {item.label}
             </div>
           ))}
@@ -153,16 +158,17 @@ export default function CityDetailPage() {
           </h2>
 
           {/* Category filter */}
-          <div className="flex gap-2 overflow-x-auto pb-2 mb-6 scrollbar-none">
+          <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-none">
             {CATEGORY_FILTERS.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm border transition-all duration-200 ${
+                className={cn(
+                  "flex-shrink-0 px-5 py-2 rounded-full text-sm transition-all duration-200",
                   activeCategory === cat
-                    ? 'bg-[var(--gold)] text-white border-[var(--gold)]'
-                    : 'border-[rgba(212,175,55,0.25)] text-[var(--gold)] hover:bg-[rgba(212,175,55,0.08)]'
-                }`}
+                    ? 'bg-earth text-paper border-earth'
+                    : 'bg-transparent border border-earth/30 text-earth hover:bg-earth/5'
+                )}
               >
                 {cat}
               </button>

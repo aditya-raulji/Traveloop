@@ -124,7 +124,13 @@ export default async function TripBuildPage({
       </aside>
 
       {/* MAIN CONTENT */}
-      <main className="flex-1 flex flex-col h-full relative overflow-hidden">
+      <main className="flex-1 flex flex-col h-full relative overflow-hidden w-full">
+        <div className="md:hidden flex items-center gap-4 px-6 h-14 bg-white border-b border-earth-muted/10 shrink-0">
+          <Link href={`/trips/${trip.id}`} className="p-2 -ml-2 text-earth-muted">
+            <ArrowLeft className="w-5 h-5" />
+          </Link>
+          <h1 className="font-heading italic text-xl text-earth truncate">{trip.name}</h1>
+        </div>
         <ItineraryBuilder trip={trip as any} />
       </main>
     </div>

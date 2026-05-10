@@ -6,6 +6,7 @@
   --color-paper: #F6F1E7;
   --color-paper-dark: #EFE7DA;
   --color-earth: #2B241D;
+  --color-earth-readable: #5C544D;
   --color-earth-muted: #6B6257;
   --color-gold: #B08968;
   --color-gold-dark: #7F5539;
@@ -32,6 +33,15 @@
   padding: 0;
 }
 
+body {
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -39,7 +49,7 @@ html {
 body {
   font-family: var(--font-body);
   background-color: var(--color-paper);
-  color: var(--color-earth);
+  color: var(--color-earth-readable);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -62,6 +72,7 @@ body::before {
 /* ── Typography ── */
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
+  color: var(--color-earth);
 }
 
 /* ── Scrollbar ── */
@@ -81,6 +92,11 @@ h1, h2, h3, h4 {
 ::selection {
   background: rgba(176, 137, 104, 0.25);
   color: var(--color-earth);
+}
+
+::placeholder {
+  color: #8B8175;
+  opacity: 1;
 }
 
 /* ── Dark theme tokens (used by Explore pages) ── */
@@ -144,4 +160,72 @@ h1, h2, h3, h4 {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* ── Container ── */
+.max-w-container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (min-width: 640px) {
+  .max-w-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .max-w-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* ── Responsive Typography ── */
+.text-section-heading {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 32px;
+}
+@media (min-width: 640px) {
+  .text-section-heading { font-size: 40px; }
+}
+@media (min-width: 1024px) {
+  .text-section-heading { font-size: 48px; }
+}
+
+.text-card-heading {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 22px;
+}
+@media (min-width: 640px) {
+  .text-card-heading { font-size: 28px; }
+}
+@media (min-width: 1024px) {
+  .text-card-heading { font-size: 32px; }
+}
+
+.text-hero-heading {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 44px;
+}
+@media (min-width: 640px) {
+  .text-hero-heading { font-size: 60px; }
+}
+@media (min-width: 1024px) {
+  .text-hero-heading { font-size: 80px; }
+}
+
+.text-body-responsive {
+  font-size: 14px;
+}
+@media (min-width: 640px) {
+  .text-body-responsive { font-size: 16px; }
+}
+@media (min-width: 1024px) {
+  .text-body-responsive { font-size: 18px; }
 }

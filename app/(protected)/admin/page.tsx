@@ -33,8 +33,8 @@ export default function AdminOverview() {
   const [stats, setStats] = useState({ users: 1247, trips: 342, active: 89, activities: 4521 });
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
-      <h1 className="font-serif italic text-4xl text-earth">Dashboard Overview</h1>
+    <div className="space-y-10 animate-in fade-in duration-500">
+      <h1 className="text-section-heading text-earth">Dashboard Overview</h1>
 
       {/* STATS ROW */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
@@ -44,9 +44,9 @@ export default function AdminOverview() {
           { label: 'Active Now', value: stats.active.toLocaleString() },
           { label: 'Activities', value: stats.activities.toLocaleString() }
         ].map((stat, i) => (
-          <div key={i} className="bg-paper-dark rounded-[20px] p-6 text-center shadow-sm border border-earth/5 hover:scale-[1.02] transition-transform">
-            <p className="font-serif italic text-4xl text-gold mb-2">{stat.value}</p>
-            <p className="text-sm font-medium text-earth-muted uppercase tracking-widest">{stat.label}</p>
+          <div key={i} className="bg-white rounded-[24px] p-8 text-center shadow-premium border border-earth/5 hover:scale-[1.02] transition-transform">
+            <p className="font-heading italic text-[44px] text-gold mb-2 leading-none">{stat.value}</p>
+            <p className="font-body text-[10px] text-earth-muted uppercase tracking-widest">{stat.label}</p>
           </div>
         ))}
       </div>

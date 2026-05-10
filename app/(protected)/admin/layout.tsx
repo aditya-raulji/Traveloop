@@ -35,7 +35,19 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         </div>
       </aside>
       
-      <main className="flex-1 md:ml-64 p-8">
+      <main className="flex-1 md:ml-64 p-4 sm:p-8">
+        <nav className="md:hidden flex items-center gap-2 overflow-x-auto pb-6 scrollbar-hide">
+          {links.map(link => (
+            <Link 
+              key={link.href} 
+              href={link.href} 
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-earth text-paper whitespace-nowrap text-xs font-medium"
+            >
+              <link.icon size={14} />
+              {link.label}
+            </Link>
+          ))}
+        </nav>
         {children}
       </main>
     </div>

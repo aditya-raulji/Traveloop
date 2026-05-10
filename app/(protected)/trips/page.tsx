@@ -28,16 +28,16 @@ function TripRow({ trip, onDelete }: { trip: Trip; onDelete: (id: string) => voi
   }, []);
 
   return (
-    <div className="bg-white rounded-[20px] border border-earth-muted/10 flex items-center gap-4 p-4 hover:shadow-md transition-all duration-300 group">
+    <div className="bg-white rounded-[24px] border border-earth-muted/10 flex flex-col sm:flex-row items-center gap-4 p-4 hover:shadow-premium transition-all duration-300 group">
       {/* Thumbnail */}
-      <div className="w-20 h-20 flex-shrink-0 rounded-[12px] overflow-hidden bg-paper-dark">
-        <div className="w-full h-full bg-cover bg-center"
-          style={{ backgroundImage: `url("${(trip as any).coverImage || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=200'}")` }} />
+      <div className="w-full sm:w-20 h-40 sm:h-20 flex-shrink-0 rounded-[16px] overflow-hidden bg-paper-dark">
+        <div className="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+          style={{ backgroundImage: `url("${(trip as any).coverImage || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400'}")` }} />
       </div>
 
       {/* Info */}
-      <div className="flex-1 min-w-0">
-        <h3 className="font-heading italic text-xl text-earth truncate mb-1">{trip.name}</h3>
+      <div className="flex-1 min-w-0 w-full">
+        <h3 className="text-card-heading text-earth truncate mb-1">{trip.name}</h3>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-earth-muted font-body">
           {(trip.startDate || trip.endDate) && (
             <span className="flex items-center gap-1">
@@ -63,8 +63,8 @@ function TripRow({ trip, onDelete }: { trip: Trip; onDelete: (id: string) => voi
       </div>
 
       {/* Status + Actions */}
-      <div className="flex items-center gap-3 flex-shrink-0">
-        <span className={`text-xs px-3 py-1 rounded-full font-medium ${cfg.badge}`}>{cfg.label}</span>
+      <div className="flex items-center justify-between sm:justify-end gap-3 flex-shrink-0 w-full sm:w-auto mt-2 sm:mt-0 pt-3 sm:pt-0 border-t sm:border-t-0 border-earth/5">
+        <span className={`text-[10px] px-3 py-1 rounded-full font-semibold uppercase tracking-wider ${cfg.badge}`}>{cfg.label}</span>
         <Link href={`/trips/${trip.id}`}
           className="hidden md:flex text-sm font-body text-earth-muted border border-earth-muted/20 hover:border-gold hover:text-gold rounded-full px-3 py-1.5 transition-colors">
           View
@@ -156,15 +156,15 @@ export default function MyTripsPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12">
+    <div className="max-w-container py-12">
       {/* Header */}
-      <div className="flex justify-between items-start mb-8">
+      <div className="flex flex-col md:flex-row justify-between items-start mb-10 gap-6">
         <div>
-          <p className="font-body text-xs uppercase tracking-widest text-earth-muted mb-1">My Account</p>
-          <h1 className="font-heading italic text-[48px] text-earth leading-tight">My Journeys</h1>
+          <p className="font-body text-[11px] uppercase tracking-widest text-earth-muted mb-2">My Account</p>
+          <h1 className="text-section-heading text-earth leading-tight">My Journeys</h1>
         </div>
         <Link href="/trips/new"
-          className="flex items-center gap-2 bg-gold text-white rounded-pill px-5 py-3 font-body font-medium text-sm hover:bg-[#B58A40] transition-colors mt-3">
+          className="flex items-center gap-2 bg-gold text-white rounded-pill px-6 py-3.5 font-body font-medium text-sm hover:bg-gold-dark transition-all shadow-lg">
           <Plus size={16} /> Plan New Trip
         </Link>
       </div>

@@ -64,13 +64,13 @@ export default function CommunityPage() {
     <main className="min-h-screen bg-paper pb-20">
       {/* Header section */}
       <section className="bg-earth text-paper py-20 px-4">
-        <div className="max-w-5xl mx-auto text-center space-y-4">
-          <h1 className="font-serif italic text-5xl md:text-6xl text-gold">Community</h1>
-          <p className="text-xl text-paper/80 font-light">Stories from fellow travelers</p>
+        <div className="max-w-container text-center space-y-4">
+          <h1 className="text-hero-heading text-gold leading-tight">Community</h1>
+          <p className="font-body text-paper/80 text-lg md:text-xl font-light italic">Stories from fellow travelers</p>
         </div>
       </section>
 
-      <div className="max-w-4xl mx-auto px-4 -mt-8 relative z-10 space-y-8">
+      <div className="max-w-container -mt-8 relative z-10 space-y-8">
         {/* Top Bar */}
         <div className="bg-white p-4 rounded-2xl shadow-sm border border-earth/10 flex flex-col md:flex-row gap-4 items-center justify-between">
           <div className="relative w-full md:w-96">
@@ -133,8 +133,8 @@ export default function CommunityPage() {
                       )}
                     </div>
                     <div>
-                      <h3 className="font-medium text-earth">{post.user.name || 'Anonymous Traveler'}</h3>
-                      <p className="text-sm text-earth-muted">
+                      <h3 className="text-card-heading text-earth">{post.user.name || 'Anonymous Traveler'}</h3>
+                      <p className="font-body text-sm text-earth-muted mt-1">
                         Traveled to {post.trip?.stops?.[0]?.cityName || post.trip?.name || 'Unknown'} in {format(new Date(post.createdAt), 'MMM yyyy')}
                       </p>
                       {post.rating && (

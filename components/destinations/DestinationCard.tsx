@@ -16,22 +16,20 @@ export interface DestinationCardProps {
   size?: 'sm' | 'md';
 }
 
-export function DestinationCard({ city, country, img, size = 'md' }: DestinationCardProps) {
-  const height = size === 'sm' ? 'h-[220px]' : 'h-[280px]';
-  const width = size === 'sm' ? 'w-[160px]' : 'w-[200px]';
-
+export function DestinationCard({ city, country, img }: DestinationCardProps) {
   return (
-    <div className={`relative flex-shrink-0 ${width} ${height} rounded-[20px] overflow-hidden group cursor-pointer`}>
+    <div className="relative w-full h-[280px] rounded-[20px] overflow-hidden group cursor-pointer">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700 group-hover:scale-110"
         style={{ backgroundImage: `url("${img}")` }}
       />
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#2B241D]/80 via-transparent to-transparent" />
+      
       {/* City name */}
-      <div className="absolute bottom-4 left-4 z-10">
-        <h3 className="font-heading italic text-white text-[20px] leading-tight">{city}</h3>
-        <p className="font-body text-white/70 text-[12px] uppercase tracking-wide">{country}</p>
+      <div className="absolute bottom-5 left-5 z-10">
+        <h3 className="font-heading italic text-white text-[24px] leading-tight">{city}</h3>
+        <p className="font-body text-white/70 text-[12px] uppercase tracking-wider">{country}</p>
       </div>
     </div>
   );

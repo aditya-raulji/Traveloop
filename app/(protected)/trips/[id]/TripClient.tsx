@@ -100,13 +100,14 @@ export default function TripClient({ trip, isOwner }: { trip: any, isOwner: bool
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`pb-4 text-sm font-medium whitespace-nowrap relative transition-colors ${
-                activeTab === tab ? 'text-earth' : 'text-earth-muted hover:text-earth'
-              }`}
+              className={cn(
+                "pb-4 text-sm font-medium whitespace-nowrap relative transition-colors",
+                activeTab === tab ? 'text-earth' : 'text-[#6B6257] hover:text-earth'
+              )}
             >
               {tab}
               {activeTab === tab && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gold rounded-t-full" />
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#B08968] rounded-t-full" />
               )}
             </button>
           ))}
@@ -132,15 +133,15 @@ function OverviewTab({ trip, duration, activitiesCount }: { trip: any, duration:
   return (
     <div className="space-y-8">
       {/* Hero */}
-      <div className="relative h-[400px] rounded-[32px] overflow-hidden shadow-lg group">
-        <img src={coverImage} alt={trip.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+      <div className="relative w-full max-w-[1050px] mx-auto h-[400px] rounded-[24px] overflow-hidden shadow-premium group">
+        <img src={coverImage} alt={trip.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#2B241D]/90 via-[#2B241D]/20 to-transparent" />
         
-        <div className="absolute bottom-8 left-8 text-white">
-          <h2 className="font-serif italic text-4xl mb-4">{trip.name}</h2>
-          <div className="flex flex-wrap gap-4 text-sm text-white/90 font-medium">
+        <div className="absolute bottom-8 left-8 text-white z-10">
+          <h2 className="font-heading italic text-[44px] md:text-[56px] leading-tight mb-4">{trip.name}</h2>
+          <div className="flex flex-wrap gap-4 text-sm text-white/90 font-body">
             {trip.startDate && trip.endDate && (
-              <span className="flex items-center"><Calendar className="w-4 h-4 mr-2 opacity-80" /> {format(new Date(trip.startDate), 'MMM d')} – {format(new Date(trip.endDate), 'MMM d, yyyy')} • {duration} days</span>
+              <span className="flex items-center"><Calendar className="w-4 h-4 mr-2 opacity-80" /> {format(new Date(trip.startDate), 'MMM d')} – {format(new Date(trip.endDate), 'MMM d, yyyy')}</span>
             )}
             <span className="flex items-center"><MapPin className="w-4 h-4 mr-2 opacity-80" /> {trip.stops?.length || 0} cities</span>
             <span className="flex items-center"><DollarSign className="w-4 h-4 mr-2 opacity-80" /> ${(trip.budget || 0).toLocaleString()}</span>
@@ -149,37 +150,52 @@ function OverviewTab({ trip, duration, activitiesCount }: { trip: any, duration:
       </div>
 
       {/* Stats Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 bg-white rounded-[24px] overflow-hidden border border-[#B08968]/20 shadow-premium">
         {[
           { label: 'Days', value: duration },
           { label: 'Cities', value: trip.stops?.length || 0 },
           { label: 'Budget', value: `$${(trip.budget || 0).toLocaleString()}` },
-          { label: 'Planned', value: `${activitiesCount} Act.` },
+          { label: 'Activities', value: activitiesCount },
         ].map((stat, i) => (
-          <div key={i} className="bg-paper-dark rounded-[20px] p-6 text-center shadow-sm">
-            <div className="font-serif italic text-3xl text-earth mb-2">{stat.value}</div>
-            <div className="w-8 h-0.5 bg-gold mx-auto mb-3" />
-            <div className="text-sm text-earth-muted">{stat.label}</div>
+          <div 
+            key={i} 
+            className={cn(
+              "py-8 px-4 text-center flex flex-col items-center justify-center",
+              i > 0 && "sm:border-l border-[#B08968]/20",
+              i === 1 && "border-l border-transparent sm:border-l-[#B08968]/20", // Fix for 2x2 grid border
+              i >= 2 && "border-t sm:border-t-0 border-[#B08968]/20"
+            )}
+          >
+            <div className="font-heading italic text-4xl text-earth">{stat.value}</div>
+            <div className="font-body text-[11px] text-[#6B6257] uppercase tracking-widest mt-2">{stat.label}</div>
           </div>
         ))}
       </div>
 
       {/* Journey Map */}
       {trip.stops && trip.stops.length > 0 && (
-        <div className="bg-white rounded-[20px] p-8 shadow-sm border border-earth-muted/10">
-          <h3 className="font-serif text-xl italic text-earth mb-8">Journey Map</h3>
-          <div className="flex items-center justify-between relative px-4">
-            <div className="absolute left-8 right-8 top-3 h-0.5 bg-earth-muted/20" />
-            {trip.stops.map((stop: any, index: number) => (
-              <div key={stop.id} className="relative z-10 flex flex-col items-center">
-                <div className="w-6 h-6 rounded-full bg-gold border-4 border-white shadow-sm mb-3" />
-                <span className="font-medium text-earth">{stop.cityName}</span>
-                {stop.startDate && (
-                  <span className="text-xs text-earth-muted mt-1">{format(new Date(stop.startDate), 'MMM d')}</span>
-                )}
-              </div>
-            ))}
+        <div className="bg-white rounded-[24px] p-10 shadow-premium border border-earth-muted/10">
+          <h3 className="font-heading text-2xl italic text-earth mb-12">Journey Map</h3>
+          <div className="relative flex items-center justify-between px-8 py-6">
+            <div className="absolute left-8 right-8 top-1/2 h-px bg-[#B08968]/30 -translate-y-1/2" />
+            {trip.stops.map((stop: any, index: number) => {
+              const totalStops = trip.stops.length;
+              const position = totalStops > 1 ? (index / (totalStops - 1)) * 100 : 50;
+              
+              return (
+                <div key={stop.id} className="relative z-10 flex flex-col items-center">
+                  <div className="w-4 h-4 rounded-full bg-[#B08968] border-[3px] border-white shadow-md mb-4" />
+                  <div className="absolute top-10 whitespace-nowrap flex flex-col items-center">
+                    <span className="font-body font-medium text-earth text-sm">{stop.cityName}</span>
+                    {stop.startDate && (
+                      <span className="text-[10px] uppercase tracking-wider text-earth-muted mt-1">{format(new Date(stop.startDate), 'MMM d')}</span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
+          <div className="h-16" /> {/* Spacer for labels */}
         </div>
       )}
     </div>

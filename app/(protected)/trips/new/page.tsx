@@ -94,7 +94,7 @@ function Step1({ data, onChange }: { data: any; onChange: (k: string, v: any) =>
       </div>
 
       {/* Dates */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs font-body uppercase tracking-widest text-earth-muted mb-2">Start Date</label>
           <div className="relative">
@@ -239,7 +239,7 @@ function Step2({ stops, onAdd, onRemove, onUpdate }: { stops: Stop[]; onAdd: (s:
                 <X size={13} />
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs text-earth-muted font-body mb-1">Arrival</label>
                 <input type="date" value={stop.startDate} onChange={e => onUpdate(stop.id, 'startDate', e.target.value)}
@@ -415,14 +415,14 @@ export default function CreateTripPage() {
 
   return (
     <div className="min-h-screen bg-paper">
-      <div className="max-w-2xl mx-auto px-6 py-12">
+      <div className="max-w-container py-12">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <Link href="/dashboard" className="w-10 h-10 rounded-full bg-paper-dark flex items-center justify-center text-earth hover:bg-gold/10 hover:text-gold transition-colors">
             <ArrowLeft size={18} />
           </Link>
           <div>
-            <h1 className="font-heading italic text-4xl text-earth leading-tight">Plan a new trip</h1>
+            <h1 className="text-section-heading text-earth leading-tight">Plan a new trip</h1>
             <p className="font-body text-earth-muted italic text-sm">Every great journey starts with a plan</p>
           </div>
         </div>

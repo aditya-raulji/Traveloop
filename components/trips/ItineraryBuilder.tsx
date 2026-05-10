@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { cn } from '@/lib/utils';
 import { 
   DndContext, 
   closestCenter, 
@@ -276,15 +277,16 @@ export default function ItineraryBuilder({ trip }: { trip: any }) {
   return (
     <>
       {/* Top Bar */}
-      <div className="h-16 border-b border-earth-muted/20 bg-white flex items-center justify-between px-6 shrink-0">
-        <div className="flex gap-6">
+      <div className="h-16 border-b border-earth-muted/20 bg-white flex items-center justify-between px-4 sm:px-6 shrink-0">
+        <div className="flex gap-4 sm:gap-6">
           {['Plan', 'View', 'Budget'].map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`text-sm font-medium relative h-16 transition-colors ${
+              className={cn(
+                "text-sm font-medium relative h-16 transition-colors",
                 activeTab === tab ? 'text-earth' : 'text-earth-muted hover:text-earth'
-              }`}
+              )}
             >
               {tab}
               {activeTab === tab && (
@@ -294,13 +296,13 @@ export default function ItineraryBuilder({ trip }: { trip: any }) {
           ))}
         </div>
         
-        <div className="flex items-center gap-3">
-          <div className="relative">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="relative hidden sm:block">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-earth-muted" />
             <input 
               type="text" 
-              placeholder="Search activities, places..." 
-              className="pl-9 pr-4 py-2 border border-earth-muted/20 rounded-full text-sm bg-earth-light/30 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold w-64 transition-all"
+              placeholder="Search..." 
+              className="pl-9 pr-4 py-2 border border-earth-muted/20 rounded-full text-sm bg-earth-light/30 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold w-32 md:w-64 transition-all"
             />
           </div>
           <button className="p-2 border border-earth-muted/20 rounded-full text-earth-muted hover:text-earth hover:bg-earth-light transition-colors">
