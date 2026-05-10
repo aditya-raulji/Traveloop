@@ -4,8 +4,9 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { format, differenceInDays, addDays } from 'date-fns';
-import { ArrowLeft, MoreHorizontal, MapPin, Calendar, DollarSign, Activity, CheckCircle, Circle, Edit, Share2, Globe, Lock, Trash } from 'lucide-react';
+import { ArrowLeft, MoreHorizontal, MapPin, Calendar, DollarSign, Activity, CheckCircle, Circle, Edit, Share2, Globe, Lock, Trash, Download } from 'lucide-react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { cn } from '@/lib/utils';
 import BudgetTab from '@/components/trips/BudgetTab';
 import ChecklistTab from '@/components/trips/ChecklistTab';
 import NotesTab from '@/components/trips/NotesTab';
@@ -51,7 +52,7 @@ export default function TripClient({ trip, isOwner }: { trip: any, isOwner: bool
   return (
     <div className="min-h-screen bg-earth-light/20 pb-20">
       {/* Top Nav */}
-      <nav className="bg-white border-b border-earth-muted/10 sticky top-0 z-40">
+      <nav className="bg-white border-b border-earth-muted/10 sticky top-16 z-40">
         <div className="max-w-5xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center text-earth-muted hover:text-earth transition-colors text-sm font-medium">
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -78,6 +79,9 @@ export default function TripClient({ trip, isOwner }: { trip: any, isOwner: bool
                     <DropdownMenu.Separator className="h-px bg-earth-muted/10 my-1" />
                     <DropdownMenu.Item onSelect={handleShare} className="flex items-center px-3 py-2 text-sm text-earth cursor-pointer hover:bg-earth-light rounded-lg outline-none">
                       <Share2 className="w-4 h-4 mr-2" /> Share Trip
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item className="flex items-center px-3 py-2 text-sm text-earth cursor-pointer hover:bg-earth-light rounded-lg outline-none" asChild>
+                      <a href={`/api/trips/${trip.id}/export`} target="_blank"><Download className="w-4 h-4 mr-2" /> Export as PDF</a>
                     </DropdownMenu.Item>
                     <DropdownMenu.Item onSelect={togglePublic} className="flex items-center px-3 py-2 text-sm text-earth cursor-pointer hover:bg-earth-light rounded-lg outline-none">
                       {isPublic ? <Lock className="w-4 h-4 mr-2" /> : <Globe className="w-4 h-4 mr-2" />}

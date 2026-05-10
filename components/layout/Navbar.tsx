@@ -1,4 +1,12 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { Menu, X } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/Button';
 
 export function Navbar() {
   const { data: session } = useSession();
@@ -26,8 +34,8 @@ export function Navbar() {
     <nav
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-16 flex items-center',
-        isScrolled
-          ? 'backdrop-blur-md bg-paper/70 border-b border-gold/20'
+        (isScrolled || !isHeroPage)
+          ? 'backdrop-blur-md bg-paper/90 border-b border-gold/20 shadow-sm'
           : 'bg-transparent'
       )}
     >
@@ -40,6 +48,7 @@ export function Navbar() {
             Traveloop
           </span>
         </Link>
+
 
         {/* Desktop Nav */}
         <div className="hidden lg:flex items-center gap-8">
@@ -113,19 +122,19 @@ export function Navbar() {
           <div className="w-16 h-px bg-gold/30 my-4" />
 
           {session?.user ? (
-            <Link href="/profile" onClick={() => setIsMobileOpen(false)} className="flex flex-col items-center gap-4">
-              <div className="w-16 h-16 rounded-full border border-gold/40 overflow-hidden flex items-center justify-center bg-gold/10 text-gold font-serif italic text-2xl">
+            <Link href="/profile" onClick={() => setIsMobileOpen(false)} className="flex flex-col items-center gap-4 mt-4">
+              <div className="w-16 h-16 rounded-full border border-gold/40 overflow-hidden flex items-center justify-center bg-gold/10 text-gold font-serif italic text-2xl shadow-lg">
                 {session.user.image ? (
                   <img src={session.user.image} alt="Profile" className="w-full h-full object-cover" />
                 ) : (
                   session.user.name?.charAt(0) || 'U'
                 )}
               </div>
-              <span className="text-paper font-heading italic text-xl">My Profile</span>
+              <span className="text-paper font-heading italic text-2xl tracking-wide">My Profile</span>
             </Link>
           ) : (
-            <Link href="/login" onClick={() => setIsMobileOpen(false)}>
-              <Button className="bg-gold text-white rounded-pill px-10 py-4 text-lg">
+            <Link href="/login" onClick={() => setIsMobileOpen(false)} className="mt-4">
+              <Button className="bg-gold text-white rounded-pill px-12 py-4 text-xl shadow-lg">
                 Login
               </Button>
             </Link>

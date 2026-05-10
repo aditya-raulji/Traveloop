@@ -244,7 +244,8 @@ export default function LandingPage() {
             </div>
           ))}
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* SECTION 6 — PLAN A TRIP CTA */}
       <section className="bg-earth py-24 px-4 sm:px-6 lg:px-8 text-center">

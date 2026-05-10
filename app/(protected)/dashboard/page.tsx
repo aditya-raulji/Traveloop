@@ -40,10 +40,10 @@ export default async function DashboardPage() {
   const firstName = session.user.name?.split(' ')[0] || 'Traveler';
 
   return (
-    <div className="max-w-7xl mx-auto px-6 md:px-12 py-10 flex flex-col gap-14">
+    <div className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-16 flex flex-col gap-10 md:gap-14">
 
       {/* HEADER */}
-      <div>
+      <div className="relative z-10">
         <p className="font-body text-earth-muted text-sm uppercase tracking-widest mb-2">Dashboard</p>
         <h1 className="font-heading italic text-[42px] md:text-[52px] text-earth leading-tight mb-1">
           {getGreeting()}, {firstName}

@@ -28,15 +28,15 @@ const styles = StyleSheet.create({
 export const TripPDFDocument = ({ trip }: { trip: any }) => {
   const startDate = trip.startDate ? format(new Date(trip.startDate), 'MMMM d, yyyy') : 'TBD';
   const endDate = trip.endDate ? format(new Date(trip.endDate), 'MMMM d, yyyy') : 'TBD';
-  const cities = trip.stops.map((s: any) => s.city.cityName).join(' — ');
+  const cities = (trip.stops || []).map((s: any) => s.cityName).join(' — ');
 
   // Calculate totals
   let totalCost = 0;
-  trip.stops.forEach((stop: any) => {
-    stop.activities.forEach((act: any) => {
+  (trip.stops || []).forEach((stop: any) => {
+    (stop.activities || []).forEach((act: any) => {
       totalCost += Number(act.cost || 0);
     });
-    stop.expenses.forEach((exp: any) => {
+    (stop.expenses || []).forEach((exp: any) => {
       totalCost += Number(exp.amount || 0);
     });
   });
@@ -45,9 +45,9 @@ export const TripPDFDocument = ({ trip }: { trip: any }) => {
     <Document>
       {/* PAGE 1 - COVER */}
       <Page size="A4" style={styles.coverPage}>
-        <Text style={styles.title}>{trip.title}</Text>
+        <Text style={styles.title}>{trip.title || trip.name}</Text>
         <Text style={styles.subtitle}>{startDate} to {endDate}</Text>
-        {trip.imageUrl && <Image src={trip.imageUrl} style={styles.coverImage} />}
+        {(trip.coverImage || trip.imageUrl) && <Image src={trip.coverImage || trip.imageUrl} style={styles.coverImage} />}
         <Text style={{ fontSize: 16, color: '#2C4A3B', marginTop: 20 }}>{cities}</Text>
       </Page>
 
@@ -77,17 +77,17 @@ export const TripPDFDocument = ({ trip }: { trip: any }) => {
       {/* PAGE 3+ - ITINERARY */}
       <Page size="A4" style={styles.page}>
         <Text style={styles.sectionTitle}>Detailed Itinerary</Text>
-        {trip.stops.sort((a: any, b: any) => a.order - b.order).map((stop: any, index: number) => (
+        {(trip.stops || []).sort((a: any, b: any) => a.order - b.order).map((stop: any, index: number) => (
           <View key={index} style={{ marginBottom: 30 }}>
-            <Text style={{ fontSize: 18, color: '#D4AF37', marginBottom: 5 }}>Stop {index + 1}: {stop.city.cityName}</Text>
+            <Text style={{ fontSize: 18, color: '#D4AF37', marginBottom: 5 }}>Stop {index + 1}: {stop.cityName}</Text>
             <Text style={{ fontSize: 12, color: '#8C7A6B', marginBottom: 15 }}>
               {stop.startDate ? format(new Date(stop.startDate), 'MMM d') : 'TBD'} - {stop.endDate ? format(new Date(stop.endDate), 'MMM d, yyyy') : 'TBD'}
             </Text>
             
-            {stop.activities.length > 0 ? stop.activities.map((act: any, actIdx: number) => (
+            {(stop.activities || []).length > 0 ? stop.activities.map((act: any, actIdx: number) => (
               <View key={actIdx} style={styles.activityRow}>
                 <Text style={styles.activityTime}>{act.time || act.date ? format(new Date(act.date), 'HH:mm') : 'Any time'}</Text>
-                <Text style={styles.activityName}>{act.activity.name}</Text>
+                <Text style={styles.activityName}>{act.activity?.name || 'Activity'}</Text>
                 <Text style={styles.activityCost}>${act.cost || 0}</Text>
               </View>
             )) : (
@@ -107,8 +107,8 @@ export const TripPDFDocument = ({ trip }: { trip: any }) => {
             <Text style={[styles.expenseHeader, { width: '20%', textAlign: 'right' }]}>Amount</Text>
           </View>
           
-          {trip.stops.map((stop: any) => 
-            stop.expenses.map((exp: any, i: number) => (
+          {(trip.stops || []).map((stop: any) => 
+            (stop.expenses || []).map((exp: any, i: number) => (
               <View key={`${stop.id}-${i}`} style={styles.expenseRow}>
                 <Text style={{ width: '30%', fontSize: 11 }}>{exp.category}</Text>
                 <Text style={{ width: '50%', fontSize: 11 }}>{exp.description}</Text>

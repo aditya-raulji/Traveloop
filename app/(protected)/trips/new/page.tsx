@@ -179,14 +179,26 @@ function Step2({ stops, onAdd, onRemove, onUpdate }: { stops: Stop[]; onAdd: (s:
     setSearch(q);
     if (q.length < 2) { setSuggestions([]); return; }
     setLoading(true);
-    const res = await fetch(`/api/cities?q=${encodeURIComponent(q)}`);
-    const data = await res.json();
-    setSuggestions(data);
+    try {
+      const res = await fetch(`/api/cities?q=${encodeURIComponent(q)}`);
+      const data = await res.json();
+      setSuggestions(data.cities || []);
+    } catch (e) {
+      console.error('Search failed:', e);
+      setSuggestions([]);
+    }
     setLoading(false);
   };
 
-  const selectCity = (c: { city: string; country: string }) => {
-    const stop: Stop = { id: Date.now().toString(), cityName: c.city, country: c.country, startDate: '', endDate: '', budget: 0 };
+  const selectCity = (c: any) => {
+    const stop: Stop = { 
+      id: Date.now().toString(), 
+      cityName: c.name || c.city, // Handle both name patterns
+      country: c.country, 
+      startDate: '', 
+      endDate: '', 
+      budget: 0 
+    };
     onAdd(stop);
     setSearch('');
     setSuggestions([]);
@@ -207,7 +219,7 @@ function Step2({ stops, onAdd, onRemove, onUpdate }: { stops: Stop[]; onAdd: (s:
                 <button key={i} onClick={() => selectCity(s)}
                   className="w-full flex items-center gap-3 px-5 py-3 hover:bg-paper-dark transition-colors text-left">
                   <MapPin size={14} className="text-gold flex-shrink-0" />
-                  <span className="font-body text-earth text-sm">{s.city}</span>
+                  <span className="font-body text-earth text-sm">{s.name || s.city}</span>
                   <span className="font-body text-earth-muted text-xs ml-auto">{s.country}</span>
                 </button>
               ))}

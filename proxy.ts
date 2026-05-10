@@ -2,24 +2,45 @@ import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import type { NextRequest } from 'next/server';
 
-const protectedRoutes = ['/dashboard', '/trips', '/profile', '/admin'];
-const authRoutes = ['/login', '/register', '/forgot-password'];
-
 export async function proxy(request: NextRequest) {
-  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
-  const { pathname } = request.nextUrl;
+  const token = await getToken({ 
+    req: request, 
+    secret: process.env.NEXTAUTH_SECRET 
+  });
+  
+  const { pathname, search } = request.nextUrl;
+  const isAuth = !!token;
+
+  const protectedRoutes = ['/dashboard', '/trips', '/profile', '/community', '/admin'];
+  const authRoutes = ['/login', '/register', '/forgot-password', '/signup'];
+  const isAdminPage = pathname.startsWith('/admin');
 
   const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
   const isAuthRoute = authRoutes.some(route => pathname.startsWith(route));
 
-  if (isProtectedRoute && !token) {
-    const url = new URL('/login', request.url);
-    url.searchParams.set('callbackUrl', encodeURI(request.url));
-    return NextResponse.redirect(url);
+  // 1. Handle Auth Pages (Login/Register)
+  if (isAuthRoute) {
+    if (isAuth) {
+      return NextResponse.redirect(new URL('/dashboard', request.url));
+    }
+    return NextResponse.next();
   }
 
-  if (isAuthRoute && token) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+  // 2. Handle Protected Routes
+  if (isProtectedRoute) {
+    if (!isAuth) {
+      let from = pathname;
+      if (search) from += search;
+      
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('from', from);
+      return NextResponse.redirect(loginUrl);
+    }
+
+    // 3. Handle Admin Protection
+    if (isAdminPage && token?.role !== 'admin') {
+      return NextResponse.redirect(new URL('/dashboard', request.url));
+    }
   }
 
   return NextResponse.next();

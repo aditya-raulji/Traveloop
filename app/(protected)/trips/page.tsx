@@ -156,15 +156,15 @@ export default function MyTripsPage() {
   };
 
   return (
-    <div className="max-w-container py-12">
+    <div className="max-w-container py-10 md:py-16">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start mb-10 gap-6">
+      <div className="flex flex-col md:flex-row justify-between items-start mb-12 gap-6 relative z-10">
         <div>
-          <p className="font-body text-[11px] uppercase tracking-widest text-earth-muted mb-2">My Account</p>
-          <h1 className="text-section-heading text-earth leading-tight">My Journeys</h1>
+          <p className="font-body text-[11px] md:text-xs uppercase tracking-widest text-earth-muted mb-2">My Account</p>
+          <h1 className="text-[36px] md:text-section-heading text-earth font-heading italic leading-tight">My Journeys</h1>
         </div>
         <Link href="/trips/new"
-          className="flex items-center gap-2 bg-gold text-white rounded-pill px-6 py-3.5 font-body font-medium text-sm hover:bg-gold-dark transition-all shadow-lg">
+          className="flex items-center gap-2 bg-gold text-white rounded-pill px-6 py-3.5 font-body font-medium text-sm hover:bg-gold-dark transition-all shadow-lg w-full md:w-auto justify-center">
           <Plus size={16} /> Plan New Trip
         </Link>
       </div>
