@@ -7,13 +7,12 @@ import * as z from 'zod';
 // GET /api/trips/[id]
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions);
-  if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const { id } = await params;
 
   try {
-    const trip = await prisma.trip.findFirst({
-      where: { id, userId: session.user.id },
+    const trip = await prisma.trip.findUnique({
+      where: { id },
       include: {
         stops: {
           orderBy: { order: 'asc' },
@@ -26,6 +25,11 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     });
 
     if (!trip) return NextResponse.json({ error: 'Trip not found' }, { status: 404 });
+
+    if (!trip.isPublic && trip.userId !== session?.user?.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     return NextResponse.json(trip);
   } catch (err) {
     console.error('GET /api/trips/[id] error:', err);
@@ -93,3 +97,5 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
+
+export const PATCH = PUT;

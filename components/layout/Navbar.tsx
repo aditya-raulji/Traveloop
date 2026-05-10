@@ -17,8 +17,9 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: 'Home', href: '/' },
+    { label: 'Home', href: '/dashboard' },
     { label: 'My Trips', href: '/trips' },
+    { label: 'Explore', href: '/explore/cities' },
     { label: 'Community', href: '/community' },
     { label: 'Profile', href: '/profile' },
   ];
