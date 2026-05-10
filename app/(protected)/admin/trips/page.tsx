@@ -38,7 +38,7 @@ export default async function AdminTripsPage() {
                 <tr key={trip.id} className="border-b border-earth/5 hover:bg-paper/30 transition-colors">
                   <td className="p-4">
                     <Link href={`/trips/${trip.id}`} className="font-medium text-earth hover:text-gold transition-colors">
-                      {trip.title}
+                      {trip.name}
                     </Link>
                   </td>
                   <td className="p-4 text-earth-muted">{trip.user?.name || 'Unknown'}</td>

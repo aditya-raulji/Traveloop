@@ -165,7 +165,7 @@ function Step1({ data, onChange }: { data: any; onChange: (k: string, v: any) =>
 // ── Step 2: Places ─────────────────────────
 function Step2({ stops, onAdd, onRemove, onUpdate }: { stops: Stop[]; onAdd: (s: Stop) => void; onRemove: (id: string) => void; onUpdate: (id: string, k: string, v: string | number) => void }) {
   const [search, setSearch] = useState('');
-  const [suggestions, setSuggestions] = useState<{ city: string; country: string }[]>([]);
+  const [suggestions, setSuggestions] = useState<{ city?: string; name?: string; country: string }[]>([]);
   const [loading, setLoading] = useState(false);
 
   const totalDays = stops.reduce((acc, s) => {
