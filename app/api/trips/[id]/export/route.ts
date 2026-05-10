@@ -6,11 +6,12 @@ import { renderToBuffer } from '@react-pdf/renderer';
 import { TripPDFDocument } from '@/lib/generateTripPDF';
 import React from 'react';
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const session = await getServerSession(authOptions);
   
   const trip = await prisma.trip.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       user: true,
       stops: {
