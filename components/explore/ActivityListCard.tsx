@@ -61,7 +61,7 @@ export function ActivityListCard({ activity }: ActivityListCardProps) {
       <div className="flex-1 p-4 flex flex-col justify-between min-w-0">
         <div>
           <div className="flex items-start justify-between gap-2 mb-1.5">
-            <h3 className="font-['Cormorant_Garamond'] italic text-[1.15rem] text-[var(--text-primary)] leading-tight">
+            <h3 className="font-['Cormorant_Garamond'] italic text-[1.15rem] text-white leading-tight">
               {activity.name}
             </h3>
             {/* Rating */}
@@ -72,25 +72,25 @@ export function ActivityListCard({ activity }: ActivityListCardProps) {
           </div>
 
           <div className="flex items-center gap-2 mb-2 flex-wrap">
-            <span className="text-xs px-2 py-0.5 rounded-full bg-[rgba(212,175,55,0.08)] border border-[rgba(212,175,55,0.2)] text-[var(--gold)]">
+            <span className="text-xs px-2 py-0.5 rounded-full bg-[rgba(212,175,55,0.08)] border border-[rgba(212,175,55,0.35)] text-[var(--gold)]">
               {icon} {activity.category}
             </span>
-            <div className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
+            <div className="flex items-center gap-1 text-xs text-white/50">
               <MapPin size={10} />
               <span>{activity.city}{activity.country ? `, ${activity.country}` : ''}</span>
             </div>
           </div>
 
           {activity.description && (
-            <p className="text-sm text-[var(--text-muted)] line-clamp-2 leading-relaxed">
+            <p className="text-sm text-white/60 line-clamp-2 leading-relaxed">
               {activity.description}
             </p>
           )}
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between mt-3 pt-3 border-t border-[rgba(212,175,55,0.08)] flex-wrap gap-2">
-          <div className="flex items-center gap-3 text-xs text-[var(--text-muted)]">
+        <div className="flex items-center justify-between mt-3 pt-3 border-t border-[rgba(255,255,255,0.08)] flex-wrap gap-2">
+          <div className="flex items-center gap-3 text-xs text-white/60">
             <div className="flex items-center gap-1">
               <Clock size={11} />
               <span>{formatDuration(activity.duration)}</span>
@@ -106,7 +106,7 @@ export function ActivityListCard({ activity }: ActivityListCardProps) {
           <div className="flex items-center gap-2">
             <Link
               href={`/explore/cities/${encodeURIComponent(activity.city)}`}
-              className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-[rgba(212,175,55,0.25)] text-xs text-[var(--gold)] hover:bg-[rgba(212,175,55,0.08)] transition-colors"
+              className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-[rgba(212,175,55,0.35)] text-xs text-[var(--gold)] hover:bg-[rgba(212,175,55,0.08)] transition-colors"
             >
               <Eye size={11} />
               View

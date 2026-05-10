@@ -43,15 +43,15 @@ export function CityCard({ city }: CityCardProps) {
       {/* Content */}
       <div className="p-4">
         <Link href={`/explore/cities/${encodeURIComponent(city.name)}`}>
-          <h3 className="font-['Cormorant_Garamond'] italic text-[1.4rem] text-[var(--text-primary)] leading-tight hover:text-[var(--gold)] transition-colors cursor-pointer">
+          <h3 className="font-['Cormorant_Garamond'] italic text-[1.4rem] text-white leading-tight hover:text-[var(--gold)] transition-colors cursor-pointer">
             {city.name}
           </h3>
         </Link>
         <div className="flex items-center gap-1 mt-0.5 mb-3">
-          <MapPin size={12} className="text-[var(--text-muted)]" />
-          <span className="text-sm text-[var(--text-muted)]">{city.country}</span>
-          <span className="mx-1 text-[var(--text-muted)]">·</span>
-          <span className="text-xs text-[var(--text-muted)]">{city.continent}</span>
+          <MapPin size={12} className="text-white/50" />
+          <span className="text-sm text-white/60">{city.country}</span>
+          <span className="mx-1 text-white/30">·</span>
+          <span className="text-xs text-white/50">{city.continent}</span>
         </div>
 
         {/* Tags */}
@@ -59,7 +59,7 @@ export function CityCard({ city }: CityCardProps) {
           {city.bestFor.slice(0, 3).map((tag) => (
             <span
               key={tag}
-              className="text-xs px-2 py-0.5 rounded-full border border-[rgba(212,175,55,0.2)] text-[var(--gold)] bg-[rgba(212,175,55,0.05)]"
+              className="text-xs px-2 py-0.5 rounded-full border border-[rgba(212,175,55,0.35)] text-[var(--gold)] bg-[rgba(212,175,55,0.08)]"
             >
               {tag}
             </span>
@@ -67,8 +67,8 @@ export function CityCard({ city }: CityCardProps) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between mt-3 pt-3 border-t border-[rgba(212,175,55,0.1)]">
-          <div className="flex items-center gap-1 text-[var(--text-muted)] text-sm">
+        <div className="flex items-center justify-between mt-3 pt-3 border-t border-[rgba(255,255,255,0.08)]">
+          <div className="flex items-center gap-1 text-white/60 text-sm">
             <DollarSign size={13} className="text-[var(--gold)]" />
             <span>~${city.avgDailyBudget}/day</span>
           </div>
